@@ -75,6 +75,12 @@ salaries = np.array(finance_features)[:, 0]
 salaries = sorted(salaries)
 print salaries
 
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+scaled_finance_features = scaler.fit_transform(finance_features)
+
+print(scaler.transform([[200000., 1000000.]]))
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
 
