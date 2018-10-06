@@ -27,5 +27,24 @@ labels, features = targetFeatureSplit(data)
 
 
 ### your code goes here 
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.cross_validation import train_test_split
 
+train_feats, test_feats, train_labels, test_labels = train_test_split(features, labels, test_size=0.3, random_state=42)
 
+clf = DecisionTreeClassifier()
+clf.fit(train_feats, train_labels)
+print("Accuracy = ", clf.score(test_feats, test_labels))
+
+import numpy as np
+pred_test = clf.predict(test_feats)
+print('People in test set = ', len(test_feats))
+print('Total Predicted POIs = ', sum(pred_test))
+
+from sklearn.metrics import confusion_matrix, classification_report, precision_score, recall_score
+#print(classification_report(test_labels, pred_test, target_names=['notPOI', 'POI']))
+print(confusion_matrix(test_labels, pred_test, labels=range(2)))
+print('Precision')
+print(precision_score(test_labels, pred_test))
+print('Recall')
+print(recall_score(test_labels, pred_test))
