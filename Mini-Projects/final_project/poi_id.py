@@ -24,6 +24,24 @@ with open("final_project_dataset.pkl", "r") as data_file:
 
 ### Task 2: Remove outliers
 data_dict.pop('TOTAL', 0)
+
+import pandas as pd
+from matplotlib.colors import ListedColormap
+import matplotlib.pyplot as plt
+
+data = featureFormat(data_dict, features_list)
+labels, features = targetFeatureSplit(data)
+
+# Note: It appears that pandas.scatter_matrix doesn't quite work
+#       as advertised, in the documentation. If it did, this wouldn't
+#       be necessary. You could pass a colormap, instead.
+palette = {0 : 'blue', 1 : 'red'}
+labels_c = map(lambda x: palette[int(x)], labels)
+
+data_frame = pd.DataFrame(features, columns=features_list[1:])
+grr = pd.scatter_matrix(data_frame, alpha=0.8, c=labels_c)
+plt.show()
+
 ### Task 3: Create new feature(s)
 ### Store to my_dataset for easy export below.
 my_dataset = data_dict
